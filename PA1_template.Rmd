@@ -34,8 +34,8 @@ clean <- activity[!is.na(activity$steps),]
 ```
 
 ```{r}
-avgstepInt <- aggregate(steps ~ interval, activity, mean)
-plot(avgStepInt$interval, avgstepInt$steps, type = "l", ylab = "Average Number of Steps", xlab = "5-minute Interval", main = "Average Number of Steps Taken in 5-Minute Intervals")
+avgStepInt <- aggregate(steps ~ interval, activity, mean)
+plot(avgStepInt$interval, avgStepInt$steps, type = "l", ylab = "Average Number of Steps", xlab = "5-minute Interval", main = "Average Number of Steps Taken in 5-Minute Intervals")
 maxIntRow <- avgStepInt[which.max(avgStepInt$steps),]
 ```
 
