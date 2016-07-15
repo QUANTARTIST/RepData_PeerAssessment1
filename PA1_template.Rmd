@@ -81,3 +81,4 @@ p + stat_summary(fun.y = mean, col = "red", geom = "line") + facet_wrap(~ wkend)
 ```
 
 Yes, weekends show a higher level of activity throughout the day whereas weekdays show higher peaks of activity in the earlier hours of the day with a slight peak in the early evening hours.
+
