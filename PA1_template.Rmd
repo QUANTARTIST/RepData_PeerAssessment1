@@ -8,15 +8,19 @@ output:
 
 ## Loading and preprocessing the data
 
+```{r}
 activity <- read.csv("activity.csv")
+```
 
 ## What is mean total number of steps taken per day?
 
+```{r}
 totStepsperDay <- aggregate(steps ~ date, activity, sum)
-  hist(totStepsperDay$steps, col = "pink", breaks = 10, xlab = "Number of steps    taken per day", main = "Histogram of Steps Taken Per Day")
+hist(totStepsperDay$steps, col = "pink", breaks = 10, xlab = "Number of steps taken per day", main = "Histogram of Steps Taken Per Day")
 meanSteps <- mean(totStepsperDay$steps)
 medSteps <- median(totStepsperDay$steps)
 meanSteps <- as.integer(meanSteps)
+```
 
 The mean and median of the total steps taken were r meanSteps and r medSteps.
 meanSteps = 10766
