@@ -1,19 +1,24 @@
----
-title: "Reproducible Research: Peer Assessment 1"
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 activity <- read.csv("activity.csv")
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 totStepsperDay <- aggregate(steps ~ date, activity, sum)
 hist(totStepsperDay$steps, col = "pink", breaks = 10, xlab = "Number of steps taken per day", main = "Histogram of Steps Taken Per Day")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+```r
 meanSteps <- mean(totStepsperDay$steps)
 medSteps <- median(totStepsperDay$steps)
 meanSteps <- as.integer(meanSteps)
@@ -29,13 +34,20 @@ Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and 
 
 Exclude NA values
 
-```{r}
+
+```r
 clean <- activity[!is.na(activity$steps),]
 ```
 
-```{r}
+
+```r
 avgStepInt <- aggregate(steps ~ interval, activity, mean)
 plot(avgStepInt$interval, avgStepInt$steps, type = "l", ylab = "Average Number of Steps", xlab = "5-minute Interval", main = "Average Number of Steps Taken in 5-Minute Intervals")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
 maxIntRow <- avgStepInt[which.max(avgStepInt$steps),]
 ```
 
@@ -45,7 +57,8 @@ For all the days in the dataset on average, the 5-minute interval, r maxIntRow[1
 
 Calculate the number of rows in the dataset that contains NA in the "steps" column. Substitute the NAs with the average number of steps for that interval over all the days studied. Plot histogram using the revised dataset and compare with the histogram created int the Step 2 above.
 
-```{r}
+
+```r
 naRows <- is.na(activity$steps)
 numNARows <- nrow(activity[naRows,])
 times <- length(unique(activity$date))
@@ -56,6 +69,11 @@ for (i in 1:length(naRows)) {
 
 totStepsperDay2 <- aggregate(steps ~ date, activity, sum)
 hist(totStepsperDay$steps, col = "orange", breaks = 10, xlab = "Number of steps taken per day", main = "Histogram of Steps Taken Per Day - Revised")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+```r
 meanSteps2 <- mean(totStepsperDay$steps)
 medSteps2 <- median(totStepsperDay$steps)
 meanSteps2 <- as.integer(meanSteps2)
@@ -69,16 +87,42 @@ Create a new factor variable in the dataset with two levels - "weekday" and "wee
 
 Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
-```{r}
 
+```r
 library(lubridate)
+```
+
+```
+## Warning: package 'lubridate' was built under R version 3.3.1
+```
+
+```
+## 
+## Attaching package: 'lubridate'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     date
+```
+
+```r
 activity$date <- ymd(activity$date)
 activity[["wkend"]] <- as.factor(ifelse(weekdays(activity$date)=="Sunday"|weekdays(activity$date)=="Saturday", "weekend","weekday"))
 library(ggplot2)
-p <- ggplot(data=activity, aes(interval, steps))
-p + stat_summary(fun.y = mean, col = "red", geom = "line") + facet_wrap(~ wkend) + ggtitle("Average Number of Steps Taken in 5-Minute Intervals")
+```
 
 ```
+## Warning: package 'ggplot2' was built under R version 3.3.1
+```
+
+```r
+p <- ggplot(data=activity, aes(interval, steps))
+p + stat_summary(fun.y = mean, col = "red", geom = "line") + facet_wrap(~ wkend) + ggtitle("Average Number of Steps Taken in 5-Minute Intervals")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 Yes, weekends show a higher level of activity throughout the day whereas weekdays show higher peaks of activity in the earlier hours of the day with a slight peak in the early evening hours.
 
